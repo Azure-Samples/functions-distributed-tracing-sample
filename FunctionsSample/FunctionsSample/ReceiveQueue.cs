@@ -34,7 +34,9 @@ namespace FunctionsSample
             // this works. 
             // var response = await client.GetStringAsync("https://httpbin.org/get");
 
-            var response =  await client.GetStringAsync("http://localhost:7071/api/FakeSpringBootAPI");
+            // for Fake API of Azure Functions
+            // var response =  await client.GetStringAsync("http://localhost:7071/api/FakeSpringBootAPI");
+            var response = await client.GetStringAsync("http://localhost:8080/process");
 
             requestTelemetry.Stop();
             TelemetryClientManager.Client.Track(requestTelemetry);
