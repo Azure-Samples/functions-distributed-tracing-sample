@@ -56,6 +56,10 @@ Copy the `local.settings.json.example` to `local.settings.json` then chenge the 
 
 Start the Azure Functions. In case of Visual Studio, Hit F5. In case of Visual Studio Code, Open Visual Studio Code on the FunctionsSample/FunctionsSample directory. Then click Debug `Attach to C# Functions`.
 
+#### Create ApplicationInsights.xml
+
+Copy the ApplicationInsights.xml then fill the InstrumentKey part from your Application Insights instrument key. Also, I recommend to create set_environment.sh from the set_environment.sh.example. However, ApplicationInsights.xml might be enough.
+
 #### Start Java Application
 
 Go to the JavaSample directory, then `gradlew bootRun` 
@@ -69,25 +73,20 @@ http://localhost:7071/api/StartOperation
 ```
 
 You will see the telemetry is sending to the Application Insights, 
-and you will see the Parent Request-Id on the Java Application console. 
+and you will see the Parent Request-Id on the Java Application console and current RequestTelemtryId on your terminal. 
 
 ```
-Parent Request-Id: |wIk9MQB7/PE=.755dd8af_2.755dd8bd_1.
+Parent Request-Id: |gqHOHSfsTMY=.bc503bfa_1.bc503c00_1.
+Current Request Id: |gqHOHSfsTMY=.bc503bfa_1.bc503c00_1.5f667911_ RootId: gqHOHSfsTMY= ParentId: |gqHOHSfsTMY=.bc503b
+fa_1.bc503c00_1.
 ```
 
-like this. 
+like this. After 5 min, you can find the telemetry is on your Application Insigts, Application Map.
 
 # TODO
 
-Now we just receive the Request-Id by the request headers. However, we are sending telemetry from Java application by the following release of this sample. Currently, This sample support sending queue -> receive queue -> sending http request -> receive http request. 
+Now we almost done. Generate Request/Dependency Telemetry and send it to the Application Insights and make sure it works. However something is remains. 
 
-* Sending Request Telemetry to App Insights
-* Sned ServiceBus Queue to the Azure Functions
-* Sending Dependency Telemetry to App Insights
-
-
-We plan to implement two protocol. 
-
-* HttpCorrelationProtocol
-* W3C Trace Context
-
+* Sending ParentId to the ServiceBus
+* Create a Service Bus Trigger Azure Functions and send the following ServiceBus trigger functions.
+* W3C TraceContext correlation sample
