@@ -59,7 +59,6 @@ public class ProcessController {
         telemetryClient.trackDependency(dependencyTelemetry);
 
         //TODO Send ServiceBus Queue
-
         return new Message(String.format(template, parentRequestId));
     }
 
