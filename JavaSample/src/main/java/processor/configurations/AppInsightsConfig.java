@@ -45,7 +45,6 @@ public class AppInsightsConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-
     public WebRequestTrackingFilter webRequestTrackingFilter(@Value("${spring.application.name:application}") String applicationName) {
         return new WebRequestTrackingFilter(applicationName);
     }
