@@ -37,7 +37,6 @@ public class AppInsightsConfig {
         return registration;
     }
 
-
     /**
      * Creates bean of type WebRequestTrackingFilter for request tracking
      * @param applicationName Name of the application to bind filter to
@@ -49,6 +48,4 @@ public class AppInsightsConfig {
     public WebRequestTrackingFilter webRequestTrackingFilter(@Value("${spring.application.name:application}") String applicationName) {
         return new WebRequestTrackingFilter(applicationName);
     }
-
-
 }
