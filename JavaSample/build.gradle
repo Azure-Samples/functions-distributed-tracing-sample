@@ -9,7 +9,6 @@ buildscript {
     }
 }
 
-
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -37,11 +36,3 @@ sourceSets.main.resources {
     srcDirs = ['src/main/java']
     include '**/*.xml'
 }
-
-// task copy(type:Copy) {
-//     description 'Copies ApplicationInsights.xml to the class path dir'
-//     from file('src/main/java/ApplicationInsights.xml')
-//     into file('$buildDir/classes/java/main')
-// }
-
-// build.dependsOn copy
