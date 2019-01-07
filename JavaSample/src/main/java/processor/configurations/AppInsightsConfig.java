@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import com.microsoft.applicationinsights.TelemetryConfiguration;
 import com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter;
+import com.google.common.base.Strings;
 
 @Configuration
 public class AppInsightsConfig {
@@ -17,7 +18,7 @@ public class AppInsightsConfig {
     @Bean
     public String telemetryConfig() {
         String telemetryKey = System.getenv("APPLICATION_INSIGHTS_IKEY");
-        if (telemetryKey != null) {
+        if (Strings.isNullOrEmpty(telemetryKey)) {
             TelemetryConfiguration.getActive().setInstrumentationKey(telemetryKey);
         }
         return telemetryKey;
