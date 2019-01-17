@@ -52,6 +52,16 @@ Then get InstrumentationKey.
 
 Copy the `local.settings.json.example` to `local.settings.json` then chenge the value of `APPINSIGHTS_INSTRUMENTATIONKEY` to fit your InstrumentationKey of the ApplicationInsights. 
 
+Define `local.settings.json` in FunctionsSample.csproj
+
+For example,
+```
+<None Update="local.settings.json">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+</None>
+```
+
 #### Start Azure Functions
 
 Start the Azure Functions. In case of Visual Studio, Hit F5. In case of Visual Studio Code, Open Visual Studio Code on the FunctionsSample/FunctionsSample directory. Then click Debug `Attach to C# Functions`.
