@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProcessController {
-    private static final String connectionString = "{connection string}";
+    private static final String connectionString = System.getenv("CONNECTION_STRING");;
     private static final String currentTemplate = "Current Request Id: %s RootId: %s ParentId: %s";
-    private static final String queueName = "{queue name}";
+    private static final String queueName = System.getenv("QUEUE");
     private static final String template = "Parent Request-Id: %s";
 
     @RequestMapping("/process")
