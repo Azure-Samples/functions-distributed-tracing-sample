@@ -38,6 +38,7 @@ dependencies {
         "com.google.guava:guava:27.0.1-jre")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile group: 'com.microsoft.azure', name: 'applicationinsights-web', version: '2.+'
+    compile group: 'com.microsoft.azure', name: 'azure-servicebus', version: '1.2.8'
 }
 
 sourceSets.main.resources {

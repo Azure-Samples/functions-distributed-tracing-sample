@@ -12,6 +12,11 @@ import com.microsoft.applicationinsights.web.extensibility.initializers.WebAppNa
 import com.microsoft.applicationinsights.web.internal.RequestTelemetryContext;
 import com.microsoft.applicationinsights.web.internal.ThreadContext;
 import com.microsoft.applicationinsights.web.internal.correlation.TelemetryCorrelationUtils;
+import com.microsoft.azure.servicebus.Message;
+import com.microsoft.azure.servicebus.ReceiveMode;
+import com.microsoft.azure.servicebus.primitives.ConnectionStringBuilder;
+import com.microsoft.azure.servicebus.primitives.ServiceBusException;
+import com.microsoft.azure.servicebus.QueueClient;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProcessController {
-    private static final String template = "Parent Request-Id: %s";
+    private static final String connectionString = System.getenv("CONNECTION_STRING");;
     private static final String currentTemplate = "Current Request Id: %s RootId: %s ParentId: %s";
+    private static final String queueName = System.getenv("QUEUE");
+    private static final String template = "Parent Request-Id: %s";
+
     @RequestMapping("/process")
-    public Message process(HttpEntity<byte[]> requestEntity) throws UnsupportedEncodingException {
+    public Message process(HttpEntity<byte[]> requestEntity) throws ServiceBusException, InterruptedException {
         //TODO Support W3C Trace Context
         String parentRequestId = requestEntity.getHeaders().getFirst("Request-Id");
         System.out.println(String.format(template, parentRequestId));
@@ -58,7 +66,11 @@ public class ProcessController {
         TelemetryClient telemetryClient = new TelemetryClient(configuration);
         telemetryClient.trackDependency(dependencyTelemetry);
 
-        //TODO Send ServiceBus Queue
+        // Create QueueClient and send Message
+        QueueClient queueClient = new QueueClient(new ConnectionStringBuilder(connectionString, queueName), ReceiveMode.PEEKLOCK);
+        queueClient.sendAsync(new Message(String.format(template, parentRequestId)));
+        queueClient.close();
+
         return new Message(String.format(template, parentRequestId));
     }
 
