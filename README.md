@@ -21,7 +21,7 @@ Storage Queue -> Azure Functions (1) -> Http Request -> Spring boot -> Service B
 
 ### Prerequisite
 
-#### Azure Functions V2 development Enviornment wich C#
+#### Azure Functions V2 development Environment wich C#
 
 * [Create your first function using Visual Studio](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-your-first-function-visual-studio)
 * [Create your first function using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-function-vs-code)
